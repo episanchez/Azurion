@@ -7,6 +7,7 @@ var express = require('express'),
     setupPassport = require('./app/setupPassport'),
     flash = require('connect-flash'),
     appRouter = require('./app/routers/appRouter.js')(express),
+    apiRouter = require('./app/routers/apiRouter.js')(express),
     session = require('express-session'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
@@ -35,6 +36,7 @@ app.use(bodyParser.urlencoded({
 setupPassport(app)
 
 app.use('/', appRouter)
+app.use('/api', apiRouter)
 
 // start app
 app.listen(port)
