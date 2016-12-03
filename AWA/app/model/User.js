@@ -1,6 +1,13 @@
 var Sequelize = require('sequelize')
 
 var attributes = {
+  uid:{
+    primaryKey: true,
+    type : Sequelize.UUID,
+    allowNull: false,
+    unique: true,
+    defaultValue: Sequelize.UUIDV4
+  },
   username: {
     type: Sequelize.STRING,
     allowNull: false,
