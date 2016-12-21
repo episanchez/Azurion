@@ -27,7 +27,44 @@ module.exports.getNearPlayersRanked = function(req, res){
   res.send('test');
 }
 
+/**
+ * The master create game
+ */
+module.exports.createGame = function(req, res){
+  var winner = Model.Team.build({
+    score: 0
+  })
+
+  var looser = Model.Team.build({
+    score: 0
+  })
+
+  winner.save().catch(function (error){
+    res.json({status:-1, error : error})
+  })
+  looser.save().catch(function (error){
+    res.json({status:-1, error : error})
+  })
+
+  var game = Model.Game.build({
+    time: req.body.gameTime,
+    ltid: looser.tid,
+    wtid: winner.tid
+  }).save().then(function (game){
+
+    res.json({status:0, game:game})
+  }).catch(function (error){
+    res.json({status:-1, error : error})
+  })
+}
+/**
+ * And an user game
+ * params game : time
+ */
 module.exports.addUserGame = function(req, res){
+  req.body.gameStats = {winningTeamId,LosingTeamId}
+
+
   res.send('test');
 }
 

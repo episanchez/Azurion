@@ -20,6 +20,8 @@ module.exports = function(express){
 
   router.post(SVers + 'addUserGame', passport.authenticate("basic", {session : false}), RankingController.addUserGame)
 
+  router.post(SVers + 'createGame', passport.authenticate("basic", {session : false}), RankingController.createGame)
+
   router.get(SVers + 'getGamesListByUID', passport.authenticate("basic", {session: false}), RankingController.getGamesListByUID)
 
   router.get(SVers + 'getTeamsListByUID', passport.authenticate("basic", {session: false}), RankingController.getTeamsListByUID)

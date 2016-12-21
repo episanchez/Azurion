@@ -20,7 +20,6 @@ Game.hasMany(User, {as: 'Players'})
 /** Include wtid and ltid into Game tables **/
 Team.hasOne(Game, {as: 'WinningTeam', foreignKey: 'wtid'})
 Team.hasOne(Game, {as: 'LosingTeam', foreignKey: 'ltid'})
-Game.belongsTo(Team)
 
 Usergame.belongsTo(User)
 Usergame.belongsTo(Team)
@@ -28,6 +27,9 @@ Usergame.belongsTo(Team)
 Team.hasMany(Usergame, {as: 'players'})
 
 //Applying Item Table to database
-connection.sync({force: true})
+//connection.sync({force: true})
 
 module.exports.User = User
+module.exports.Game = Game
+module.exports.Team = Team
+module.exports.Usergame = Usergame
