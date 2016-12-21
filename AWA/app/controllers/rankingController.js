@@ -46,6 +46,7 @@ module.exports.createGame = function(req, res){
     res.json({status:-1, error : error})
   })
 
+  // Implement HomeTeam And AwayTeam
   var game = Model.Game.build({
     time: req.body.gameTime,
     ltid: looser.tid,
@@ -62,10 +63,17 @@ module.exports.createGame = function(req, res){
  * params game : time
  */
 module.exports.addUserGame = function(req, res){
-  req.body.gameStats = {winningTeamId,LosingTeamId}
 
-
-  res.send('test');
+  Model.Usergame.create({
+    reputation: req.body.reputation,
+    userUid: req.body.uid,
+    flags: req.body.flags,
+    teamTid: req.body.tid
+  }).then(function (usergame){
+    res.json({status:0, usergame:usergame})
+  }).catch(function (error){
+    res.json({status:-1, error : error})
+  })
 }
 
 module.exports.getGamesListByUID = function(req, res){
