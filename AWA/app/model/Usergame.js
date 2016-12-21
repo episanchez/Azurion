@@ -16,14 +16,8 @@ var attributes = {
   reputation: {
     type: Sequelize.INTEGER
   },
-  kills:{
-    type: Sequelize.INTEGER
-  },
-  killed:{
-    type: Sequelize.INTEGER
-  },
   flags:{
-    type: Sequelize.INTEGER
+    type: Sequelize.TEXT // JSON
   }
 }
 
