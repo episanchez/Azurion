@@ -4,9 +4,9 @@
  */
 
 var Model = require('../model/models')
-
+var Sequelize = require('../sequelize')
 /**
- * Get Player Ranking
+ * Get Player
  * @param username - string
  */
 module.exports.getPlayerRank = function(req, res){
@@ -24,7 +24,17 @@ module.exports.getPlayerRank = function(req, res){
 }
 
 module.exports.getNearPlayersRanked = function(req, res){
-  res.send('test');
+  var un = Model.Usergame.findOne({
+    rank: {
+      $eq:1
+    }
+  }).then (function (result){
+      console.log(un['rank']);
+    res.json({ranking:result})
+  }).catch(function (error){
+      res.send('test');
+  })
+
 }
 
 /**
@@ -77,9 +87,23 @@ module.exports.addUserGame = function(req, res){
 }
 
 module.exports.getGamesListByUID = function(req, res){
-  res.send('test')
+req.body.uid="fd120a8c-5a8f-4fb3-bb0f-08f83642a6fd"
+  Sequelize.query('SELECT * FROM usergame WHERE userUid = ?',
+  { replacements: [req.body.uid], type: Sequelize.QueryTypes.SELECT}
+).then(function (usergames){
+  res.json({status:0, usergames:usergames})
+}).catch(function (error){
+  res.json({status:-1, error : error})
+})
 }
 
 module.exports.getTeamsListByUID = function(req, res){
-  res.send('etss')
+  req.body.uid="fd120a8c-5a8f-4fb3-bb0f-08f83642a6fd"
+  Sequelize.query('SELECT * FROM teams t JOIN usergame ug ON ug.teamTid=t.tid WHERE ug.userUid = ?',
+  { replacements: [req.body.uid], type: Sequelize.QueryTypes.SELECT}
+).then(function (usergames){
+  res.json({status:0, usergames:usergames})
+}).catch(function (error){
+  res.json({status:-1, error : error})
+})
 }

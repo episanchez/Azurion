@@ -33,7 +33,7 @@ var attributes = {
   },
   salt: {
     type: Sequelize.STRING
-  }
+  },
 }
 
 var options = {
