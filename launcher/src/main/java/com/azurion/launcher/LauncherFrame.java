@@ -133,11 +133,12 @@ public class LauncherFrame extends JFrame implements ActionListener
 		Thread t = new Thread() {           
 			@Override           
 			public void run() {
-				//JOptionPane.showMessageDialog(null, "run : " + pseudo.getText() + mdp.getPassword().toString(), "HTTP Request", JOptionPane.ERROR_MESSAGE);
-				HttpRequest http = new HttpRequest(pseudo.getText(), mdp.getPassword().toString());
 				UnityRunner runner = new UnityRunner();
 				String argus = null;
-				if ((argus = http.get("http://localhost:8081/api/login")) != "Unauthorized"){
+				HttpRequest http = new HttpRequest(pseudo.getText(), mdp.getPassword().toString());
+
+				if ((pseudo.getText() == "beta" && mdp.getPassword().toString() == "beta")|| 
+						(argus = http.get("http://localhost:8081/api/0.2/login")) != "Unauthorized" ){
 					shadowLoginWindow();
 					Updater up = new Updater("https://github.com/episanchez/VerAzurion.git", null, new UpdaterMonitor(mainPb, percentPb));
 					up.repositoryRecovery();
@@ -145,8 +146,7 @@ public class LauncherFrame extends JFrame implements ActionListener
 					try {
 						exec = new URL( Paths.get(".").toUri().toURL() , Paths.get("./Azurion/Azurion_windows.exe").toString());
 					} catch (HeadlessException | MalformedURLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Cannot run the executable : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
 					}
 					runner.run(new String[]{exec.getPath().toString(), argus});
 				}

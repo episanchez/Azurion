@@ -22,20 +22,15 @@ public class HttpRequest {
 	private UsernamePasswordCredentials creds;
 	
 	public HttpRequest(String username, String password){
-		//JOptionPane.showMessageDialog(null, "befor HTTP builder", "HTTP Request", JOptionPane.ERROR_MESSAGE);
 		client = HttpClientBuilder.create().build();
-		//JOptionPane.showMessageDialog(null, "After HTTP Builder", "HTTP Request", JOptionPane.ERROR_MESSAGE);
 		creds =  new UsernamePasswordCredentials(username, password);
 	}
 	
 	
 	public String get(String URL){
-		//JOptionPane.showMessageDialog(null, "HTTPGet", "HTTP Request", JOptionPane.ERROR_MESSAGE);
 		HttpGet httpGet = new HttpGet(URL);
 		try {
-			//JOptionPane.showMessageDialog(null, "Before Basic Scheme", "HTTP Request", JOptionPane.ERROR_MESSAGE);
 			Header header = new BasicScheme(StandardCharsets.UTF_8).authenticate(creds , httpGet, null);
-			//JOptionPane.showMessageDialog(null, "After Basic Scheme", "Information", JOptionPane.ERROR_MESSAGE);
 			httpGet.addHeader(header);
 			
 			HttpResponse httpResponse = client.execute(httpGet);
@@ -65,9 +60,9 @@ public class HttpRequest {
 			
 			return responseString;
 		} catch (AuthenticationException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Connexion à échoué : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
 		} catch (IOException e){
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Connexion à échoué : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
 		return "Unauthorized";
 	}

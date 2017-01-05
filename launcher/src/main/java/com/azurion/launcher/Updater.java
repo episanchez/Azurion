@@ -55,7 +55,7 @@ public class Updater {
 		try{
 			if (RepositoryCache.FileKey.isGitRepository(new File(dir.getAbsolutePath(), ".git"), FS.DETECTED)){
 				this.repo = Git.open(new File(dir.getAbsolutePath(), ".git"));
-				this.repo.checkout().setName(this.branch).call();
+				this.repo.checkout().setName("origin/" + this.branch).call();
 				this.repo.pull().setProgressMonitor(this.monitor).call();
 			}
 			else {
