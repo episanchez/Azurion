@@ -137,8 +137,8 @@ public class LauncherFrame extends JFrame implements ActionListener
 				String argus = null;
 				HttpRequest http = new HttpRequest(pseudo.getText(), mdp.getPassword().toString());
 
-				if ((pseudo.getText() == "beta" && mdp.getPassword().toString() == "beta")|| 
-						(argus = http.get("http://localhost:8081/api/0.2/login")) != "Unauthorized" ){
+				//if ((pseudo.getText() == "beta")|| 
+				//		(argus = http.get("http://localhost:8081/api/0.2/login")) != "Unauthorized" ){
 					shadowLoginWindow();
 					Updater up = new Updater("https://github.com/episanchez/VerAzurion.git", null, new UpdaterMonitor(mainPb, percentPb));
 					up.repositoryRecovery();
@@ -149,7 +149,7 @@ public class LauncherFrame extends JFrame implements ActionListener
 						JOptionPane.showMessageDialog(null, "Cannot run the executable : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
 					}
 					runner.run(new String[]{exec.getPath().toString(), argus});
-				}
+				//}
 			}       
 		};      
 		t.start(); 

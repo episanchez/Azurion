@@ -12,7 +12,8 @@
 apply plugin: 'java'
 apply plugin: 'application'
  apply plugin: 'edu.sc.seis.launch4j'
- 
+apply plugin: 'com.github.johnrengelman.shadow'
+
 mainClassName = "com.azurion.launcher.LauncherFrame"
 
 buildscript {
@@ -23,6 +24,7 @@ buildscript {
   }
   dependencies {
     classpath 'gradle.plugin.edu.sc.seis.gradle:launch4j:2.1.0'
+    classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
   }
 }
 
@@ -34,26 +36,30 @@ repositories {
     jcenter()
 }
 
+task testJar(type: Jar) {
+  manifest {
+    attributes 'Description': 'This is an application JAR'
+  }
+}
+
+shadowJar {
+  manifest {
+    inheritFrom project.tasks.testJar.manifest
+  }
+}
+
+
 
 launch4j {
     outfile = 'Azurion-Launcher.exe'
     mainClassName = "com.azurion.launcher.LauncherFrame"
     productName = 'Azurion Launcher'
+
+    copyConfigurable = project.tasks.shadowJar.outputs.files
+    jar = "lib/${project.tasks.shadowJar.archiveName}"
 }
 
-task createFastStart(type: edu.sc.seis.launch4j.tasks.Launch4jLibraryTask) {
-    outfile = 'Azurion-Fast_Launcher.exe'
-    mainClassName = "com.azurion.launcher.LauncherFrame"
-    fileDescription = 'The lightning fast implementation'
-}
 
-//jar {
-//    manifest {
-//        attributes("Implementation-Title": "Azurion-launcher",
-  //          "Implementation-Version": "0.1",
-//            "Main-Class": "com.azurion.launcher.LauncherFrame")
-  //  }
-//}
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
